@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./App.css"
 import { Form } from "./components/Form"
 import { type IUser } from "./types"
@@ -8,6 +8,10 @@ export default function App() {
     const [users, setUsers] = useState<IUser[]>([
         {id: 123, name: "John", email: "John@doe", createdAt: "0"}
     ])
+
+    useEffect(() => {
+        
+    }, [])
     return (
         <div className="app">
             <header className="header">

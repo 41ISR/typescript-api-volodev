@@ -39,11 +39,21 @@ class ApiClient {
                     errorData.error ||
                     `HTTP ${response.status}: ${response.statusText}`
                 )
-                
             }
         } catch (error) {
-            
+            if (error instanceof ApiError) {
+                throw error
+            }
+            throw new ApiError(
+                0, 
+                `Network error: ${error instanceof Error ? error.message :
+                    'Unknown error'
+                }`)
         }
+    }
+
+    async get(endpoint: string): {
+        
     }
 }
 

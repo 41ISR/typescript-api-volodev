@@ -17,10 +17,10 @@ class ApiClient {
         this.baseUrl = baseUrl
     }
 
-    private async request(
+    private async request<T>(
         endpoint: string,
         options?: RequestInit
-    ) {
+    ): Promise<T> {
         const url = `${this.baseUrl}${endpoint}`
         const config: RequestInit = {...options,
             headers: {
@@ -40,6 +40,8 @@ class ApiClient {
                     `HTTP ${response.status}: ${response.statusText}`
                 )
             }
+            
+            return await response.json()
         } catch (error) {
             if (error instanceof ApiError) {
                 throw error
@@ -52,8 +54,8 @@ class ApiClient {
         }
     }
 
-    async get(endpoint: string): {
-        
+    async get<T>(endpoint: string): Promise<T> {
+        return this.request<T>
     }
 }
 

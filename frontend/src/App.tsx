@@ -60,7 +60,7 @@ export default function App() {
                 </div>}
                 <section className="form-section">
                     <h2>Add New User</h2>
-                    <Form formData={formData} />
+                    <Form handleInputChange={handleInputChange} formData={formData} />
                 </section>
 
                 <section className="users-section">
@@ -74,7 +74,7 @@ export default function App() {
                             Loading users...
                         </div>) :
                         (<div className="users-list">
-                            {users.map((el) => <User {...el} />)}
+                            {users.map((el, i) => <User key={i} {...el} />)}
                         </div>)}
                 </section>
             </main>

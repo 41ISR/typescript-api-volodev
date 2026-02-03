@@ -1,10 +1,12 @@
+import type { ChangeEvent } from "react"
 import type { ICreateUserRequest } from "../types"
 
 interface IFormProps {
     formData: ICreateUserRequest
+    handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Form = ({ formData }: IFormProps) => {
+export const Form = ({ formData, handleInputChange }: IFormProps) => {
     return (
         <form className="user-form">
             <div className="form-group">
@@ -24,6 +26,7 @@ export const Form = ({ formData }: IFormProps) => {
                 <input
                     name="email"
                     type="email"
+                    onChange={handleInputChange}
                     value={formData.email}
                     id="email"
                     placeholder="john@example.com"

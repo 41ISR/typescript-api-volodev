@@ -1,10 +1,22 @@
-export const Form = () => {
+import type { ChangeEvent, FormEvent } from "react"
+import type { ICreateUserRequest } from "../types"
+
+interface IFormProps {
+    formData: ICreateUserRequest
+    handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
+    hendleSubmit: (e: FormEvent) => void
+}
+
+export const Form = ({ formData, handleInputChange, hendleSubmit }: IFormProps) => {
     return (
-        <form className="user-form">
+        <form onSubmit={hendleSubmit} className="user-form">
             <div className="form-group">
                 <label htmlFor="name">Name:</label>
                 <input
+                    onChange={handleInputChange}
                     type="text"
+                    name="name"
+                    value={formData.name}
                     id="name"
                     placeholder="John Doe"
                 />
@@ -13,7 +25,10 @@ export const Form = () => {
             <div className="form-group">
                 <label htmlFor="email">Email:</label>
                 <input
+                    name="email"
                     type="email"
+                    onChange={handleInputChange}
+                    value={formData.email}
                     id="email"
                     placeholder="john@example.com"
                 />

@@ -12,7 +12,7 @@ export default function App() {
 
     const fetchUsers = async () => {
         setIsLoading(true)
-        try {
+        try {~
             const response = await apiClient.getUsers()
 
             if (response.success && response.data) {
@@ -41,6 +41,10 @@ export default function App() {
             </header>
 
             <main className="main">
+                {error && <div className="error-banner">
+                    {error}
+                    <button onClick={() => setError(null)} className="error-close">x</button>
+                </div>}
                 <section className="form-section">
                     <h2>Add New User</h2>
                     <Form />

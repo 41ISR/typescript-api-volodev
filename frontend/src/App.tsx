@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent } from "react"
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 import "./App.css"
 import { Form } from "./components/Form"
 import { type ICreateUserRequest, type IUser } from "./types"
@@ -47,6 +47,11 @@ export default function App() {
             ({...old, [name]: value})
         )
     }
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault()
+        console.log(formData)
+    }
     return (
         <div className="app">
             <header className="header">
@@ -60,7 +65,7 @@ export default function App() {
                 </div>}
                 <section className="form-section">
                     <h2>Add New User</h2>
-                    <Form handleInputChange={handleInputChange} formData={formData} />
+                    <Form handleSubmit={handleSubmit} handleInputChange={handleInputChange} formData={formData} />
                 </section>
 
                 <section className="users-section">

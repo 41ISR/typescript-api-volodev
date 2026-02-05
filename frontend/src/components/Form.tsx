@@ -3,12 +3,13 @@ import type { ICreateUserRequest } from "../types"
 
 interface IFormProps {
     formData: ICreateUserRequest
+    handleSubmit: (e: ChangeEvent<HTMLInputElement>) => void
     handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Form = ({ formData, handleInputChange }: IFormProps) => {
+export const Form = ({ formData, handleInputChange, handleSubmit }: IFormProps) => {
     return (
-        <form className="user-form">
+        <form onSubmit={handleSubmit} className="user-form">
             <div className="form-group">
                 <label htmlFor="name">Name:</label>
                 <input

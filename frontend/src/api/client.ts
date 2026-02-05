@@ -19,12 +19,28 @@ class ApiClient {
         this.baseUrl = baseUrl
     }
 
+    private buildUrl(
+        endpoint: string,
+        params?: Record<string, any>) {
+        const url = new URL(`${this.baseUrl}${endpoint}`)
+
+        if (params) {
+            Object.entries(params).forEach(([key, value]) => {
+                if (value !== undefined && key !== undefined) 
+                    url.searchParams.append(key, String(value))
+            })
+        }
+
+        return url.toString()
+    }
+
     private async request<T>(
         endpoint: string,
-        options?: RequestInit
+        options?: RequestInit,
     ): Promise<T> {
         const url = `${this.baseUrl}${endpoint}`
-        const config: RequestInit = {...options,
+        const config: RequestInit = {
+            ...options,
             headers: {
                 "Content-type": "application/json",
                 ...options?.headers
@@ -34,7 +50,7 @@ class ApiClient {
             const response = await fetch(url, config)
 
             if (!response.ok) {
-                const errorData = 
+                const errorData =
                     await response.json().catch(() => ({}))
                 throw new ApiError(
                     response.status,
@@ -49,19 +65,23 @@ class ApiClient {
                 throw error
             }
             throw new ApiError(
-                0, 
+                0,
                 `Network error: ${error instanceof Error ? error.message :
                     'Unknown error'
                 }`)
         }
     }
 
-    async get<T>(endpoint: string): Promise<T> {
-        return this.request<T>(endpoint, {
+    async get<T>(
+        endpoint: string,
+        params?: Record<string, any>
+    ): Promise<T> {
+        const url = params ? this.buildUrl(endpoint, params) : endpoint
+        return this.request<T>(url.replaceAll(this.baseUrl, ""), {
             method: "GET"
         })
     }
-    
+
     async post<TRequest, TResponse>(
         endpoint: string,
         data: TRequest

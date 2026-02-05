@@ -37,6 +37,7 @@ export default function App() {
 
     useEffect(() => {
         fetchUsers()
+        // apiClient.get("/users", {id: 1, prop: "123"})
     }, [])
 
     const handleInputChange = (
